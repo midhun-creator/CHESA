@@ -1,0 +1,3051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHESA Inauguration - PixelCraft 2025</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        /* CSS Variables for Color Palette */
+        :root {
+            --navy: #0a0f24;
+            --cyan: #00eaff;
+            --gold: #ffd700;
+            --white: #ffffff;
+            --dark-navy: #050a15;
+            --gray: #f0f0f0;
+            --purple: #8b5cf6;
+            --pink: #ec4899;
+        }
+        
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* PROFESSIONAL LOADING SCREEN */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--navy) 0%, #0f172a 100%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        /* Loading Container */
+        .loading-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        /* Logo Animation */
+        .logo-animation {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: var(--cyan);
+            animation: spin 2s linear infinite;
+        }
+        
+        .logo-ring:nth-child(2) {
+            width: 90%;
+            height: 90%;
+            border-top-color: var(--purple);
+            animation-duration: 3s;
+            animation-direction: reverse;
+        }
+        
+        .logo-ring:nth-child(3) {
+            width: 80%;
+            height: 80%;
+            border-top-color: var(--gold);
+            animation-duration: 4s;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-icon {
+            font-size: 3rem;
+            color: var(--cyan);
+            z-index: 2;
+            text-shadow: 0 0 15px rgba(0, 234, 255, 0.7);
+        }
+        
+        /* Loading Text */
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+        
+        /* Progress Bar Container */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Circuit Animation */
+        .circuit-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+        
+        .circuit-line {
+            position: absolute;
+            background: var(--cyan);
+            opacity: 0.6;
+        }
+        
+        .circuit-node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+        
+        /* Loading Dots */
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cyan);
+            opacity: 0.4;
+            animation: dotPulse 1.5s infinite ease-in-out;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 15, 36, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 234, 255, 0.2);
+        }
+        
+        nav.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0, 234, 255, 0.2);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border: 2px dashed var(--cyan);
+            border-radius: 8px;
+            color: var(--cyan);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-placeholder:hover {
+            background-color: rgba(0, 234, 255, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--purple));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--cyan);
+        }
+        
+        .nav-links a:hover::before {
+            transform: translateX(0);
+        }
+        
+        .nav-links a.active {
+            color: var(--gold);
+        }
+        
+        .nav-links a.active::before {
+            transform: translateX(0);
+            background: linear-gradient(90deg, var(--gold), var(--pink));
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 100px 0 50px;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+        
+        .event-name {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--cyan), var(--purple), var(--pink), var(--gold));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s ease infinite;
+            text-shadow: 0 0 30px rgba(0, 234, 255, 0.3);
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .tagline {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .event-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px 0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            transition: all 0.3s ease;
+            width: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .detail-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.2), rgba(139, 92, 246, 0.2));
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .detail-item:hover::before {
+            transform: translateX(0);
+        }
+        
+        .detail-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 234, 255, 0.3);
+            border-color: var(--cyan);
+        }
+        
+        .detail-icon {
+            font-size: 2.5rem;
+            color: var(--cyan);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .detail-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .detail-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Countdown Timer */
+        .countdown-container {
+            margin-top: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .countdown-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 120px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 234, 255, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .countdown-item:hover::before {
+            opacity: 1;
+        }
+        
+        .countdown-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--cyan);
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px rgba(0, 234, 255, 0.5);
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        /* CTA Button */
+        .cta-container {
+            margin-top: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(45deg, var(--cyan), var(--purple));
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--purple), var(--pink));
+            z-index: -1;
+            transition: transform 0.5s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 234, 255, 0.5);
+        }
+        
+        .cta-btn:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
+        }
+        
+        /* About Section */
+        .about {
+            background-color: rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(0,234,255,0.05)" stroke-width="0.5"/></svg>');
+            opacity: 0.5;
+            z-index: -1;
+        }
+        
+        .about-content {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        .about-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .about-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        
+        .about-image-placeholder {
+            width: 100%;
+            max-width: 450px;
+            height: 350px;
+            border-radius: 20px;
+            border: 2px dashed var(--cyan);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--cyan);
+            font-size: 4rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.1), rgba(139, 92, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .about-image-placeholder:hover::before {
+            opacity: 1;
+        }
+        
+        .about-image-placeholder:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 234, 255, 0.3);
+        }
+        
+        /* Schedule Section */
+        .schedule {
+            background-color: rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .schedule::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.1), transparent 50%);
+            z-index: -1;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--cyan), var(--purple), var(--pink));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12.5px;
+            background: var(--navy);
+            border: 3px solid var(--cyan);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.5);
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .right::after {
+            left: -12.5px;
+        }
+        
+        .timeline-content {
+            padding: 25px 35px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 20px;
+            position: relative;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.1), rgba(139, 92, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .timeline-content:hover::before {
+            opacity: 1;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 234, 255, 0.3);
+            border-color: var(--cyan);
+        }
+        
+        .timeline-time {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--cyan);
+        }
+        
+        .timeline-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Speakers Section */
+        .speakers {
+            background-color: rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .speakers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="rgba(139,92,246,0.1)" stroke-width="1"/><circle cx="100" cy="100" r="60" fill="none" stroke="rgba(0,234,255,0.1)" stroke-width="1"/><circle cx="100" cy="100" r="40" fill="none" stroke="rgba(236,72,153,0.1)" stroke-width="1"/></svg>');
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 40px;
+        }
+        
+        .speaker-card {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .speaker-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.1), rgba(139, 92, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .speaker-card:hover::before {
+            opacity: 1;
+        }
+        
+        .speaker-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 234, 255, 0.3);
+            border-color: var(--cyan);
+        }
+        
+        .speaker-image-placeholder {
+            width: 100%;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0, 234, 255, 0.05), rgba(139, 92, 246, 0.05));
+            color: var(--cyan);
+            font-size: 5rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .speaker-image-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.2), rgba(139, 92, 246, 0.2));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .speaker-image-placeholder:hover::after {
+            opacity: 1;
+        }
+        
+        .speaker-info {
+            padding: 30px;
+        }
+        
+        .speaker-name {
+            font-size: 1.6rem;
+            color: var(--cyan);
+            margin-bottom: 8px;
+        }
+        
+        .speaker-role {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        
+        .speaker-bio {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Faculty Section */
+        .faculty {
+            background-color: rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .faculty::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.1), transparent 50%);
+            z-index: -1;
+        }
+        
+        .faculty-group {
+            margin-bottom: 60px;
+        }
+        
+        .group-title {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .group-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
+        }
+        
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .teacher-card {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .teacher-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.1), rgba(139, 92, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .teacher-card:hover::before {
+            opacity: 1;
+        }
+        
+        .teacher-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 234, 255, 0.3);
+            border-color: var(--cyan);
+        }
+        
+        .teacher-image-placeholder {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0, 234, 255, 0.05), rgba(139, 92, 246, 0.05));
+            color: var(--cyan);
+            font-size: 4rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .teacher-image-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.2), rgba(139, 92, 246, 0.2));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .teacher-image-placeholder:hover::after {
+            opacity: 1;
+        }
+        
+        .teacher-info {
+            padding: 25px;
+        }
+        
+        .teacher-name {
+            font-size: 1.4rem;
+            color: var(--cyan);
+            margin-bottom: 5px;
+        }
+        
+        .teacher-role {
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        
+        .teacher-details {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .teacher-qualifications {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 234, 255, 0.2);
+        }
+        
+        .qualification-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .qualification-item i {
+            color: var(--cyan);
+            font-size: 1rem;
+        }
+        
+        .teacher-contact {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .teacher-contact a {
+            color: var(--white);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .teacher-contact a:hover {
+            color: var(--cyan);
+            transform: translateY(-3px);
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(139,92,246,0.1)" stroke-width="1"/><circle cx="150" cy="50" r="30" fill="none" stroke="rgba(0,234,255,0.1)" stroke-width="1"/><circle cx="50" cy="150" r="30" fill="none" stroke="rgba(236,72,153,0.1)" stroke-width="1"/><circle cx="150" cy="150" r="30" fill="none" stroke="rgba(255,215,0,0.1)" stroke-width="1"/></svg>');
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 60px;
+            align-items: stretch;
+        }
+        
+        .contact-info {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 234, 255, 0.1), rgba(139, 92, 246, 0.1));
+            border: 2px solid var(--cyan);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--cyan);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            background: linear-gradient(135deg, rgba(0, 234, 255, 0.2), rgba(139, 92, 246, 0.2));
+            transform: scale(1.1);
+        }
+        
+        .contact-text h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--gold);
+        }
+        
+        .contact-text p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .contact-form {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(0, 234, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, var(--cyan), var(--purple));
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--purple), var(--pink));
+            z-index: -1;
+            transition: transform 0.5s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 234, 255, 0.3);
+        }
+        
+        .btn-submit:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-navy);
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 234, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,50 Q25,25 50,50 T100,50" stroke="rgba(0,234,255,0.1)" stroke-width="1" fill="none"/></svg>');
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .social-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--cyan), var(--purple));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 234, 255, 0.3);
+        }
+        
+        .social-link:hover::before {
+            opacity: 1;
+        }
+        
+        .social-link:hover i {
+            color: var(--navy);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .copyright {
+            font-size: 1rem;
+            opacity: 0.7;
+            color: var(--gray);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .event-name {
+                font-size: 4rem;
+            }
+            
+            .tagline {
+                font-size: 1.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .event-name {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .detail-item {
+                width: 150px;
+            }
+            
+            .countdown-item {
+                min-width: 100px;
+                padding: 15px;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+            
+            .left::after, .right::after {
+                left: 21px;
+            }
+            
+            .right {
+                left: 0%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .event-name {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .detail-item {
+                width: 130px;
+                padding: 15px;
+            }
+            
+            .detail-icon {
+                font-size: 2rem;
+            }
+            
+            .detail-value {
+                font-size: 1.1rem;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 10px;
+            }
+            
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+            
+            .cta-btn {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Loading Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-delay-1 {
+            animation-delay: 1s;
+        }
+        
+        .floating-delay-2 {
+            animation-delay: 2s;
+        }
+        
+        .floating-delay-3 {
+            animation-delay: 3s;
+        }
+        
+        /* Text Animation */
+        .text-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            color: var(--white);
+            font-size: 4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                         -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                         0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            animation: glitch-1 0.5s infinite;
+            color: var(--cyan);
+            z-index: -1;
+        }
+        
+        .glitch::after {
+            animation: glitch-2 0.5s infinite;
+            color: var(--pink);
+            z-index: -2;
+        }
+        
+        @keyframes glitch-1 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(20% 0 30% 0); transform: translate(-5px, 5px); }
+            40% { clip-path: inset(50% 0 20% 0); transform: translate(5px, -5px); }
+            60% { clip-path: inset(10% 0 60% 0); transform: translate(-5px, 0); }
+            80% { clip-path: inset(80% 0 5% 0); transform: translate(3px, 0); }
+        }
+        
+        @keyframes glitch-2 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(5px, -3px); }
+            40% { clip-path: inset(20% 0 50% 0); transform: translate(-5px, 3px); }
+            60% { clip-path: inset(30% 0 40% 0); transform: translate(3px, 5px); }
+            80% { clip-path: inset(5% 0 80% 0); transform: translate(-3px, -5px); }
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--navy), #1a1f3a);
+        }
+        
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(0,234,255,0.03)" stroke-width="0.5"/></svg>');
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Professional Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <!-- Circuit Animation Background -->
+        <div class="circuit-animation" id="circuitAnimation"></div>
+        
+        <!-- Loading Container -->
+        <div class="loading-container">
+            <!-- Logo Animation -->
+            <div class="logo-animation">
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+            </div>
+            
+            <!-- Loading Text -->
+            <div class="loading-text">CHESA</div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <!-- Loading Dots -->
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-placeholder" title="CHESA Logo">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="logo-text">CHESA</div>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#schedule">Schedule</a>
+                <a href="#speakers">Speakers</a>
+                <a href="#faculty">Faculty</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="container hero-content">
+            <h1 class="event-name glitch" data-text="CHESA Inauguration">CHESA Inauguration</h1>
+            <p class="tagline text-reveal">PixelCraft 2025 - Design the Future, Launch the Moment</p>
+            
+            <div class="event-details">
+                <div class="detail-item floating">
+                    <div class="detail-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="detail-label">Date</div>
+                    <div class="detail-value">14 August 2025</div>
+                </div>
+                
+                <div class="detail-item floating floating-delay-1">
+                    <div class="detail-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="detail-label">Time</div>
+                    <div class="detail-value">10:00 AM IST</div>
+                </div>
+                
+                <div class="detail-item floating floating-delay-2">
+                    <div class="detail-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="detail-label">Venue</div>
+                    <div class="detail-value">GPTC Palakkad</div>
+                </div>
+            </div>
+            
+            <div class="countdown-container">
+                <h3 class="countdown-title">Event Starts In</h3>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-container">
+                <a href="https://forms.gle/Fciq45tsQJpuoXnZ9" target="_blank" class="cta-btn">RSVP Now</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About CHESA</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-description">
+                        The Computer Hardware Engineering Students Association (CHESA) is a dynamic student body at Government Polytechnic College, Palakkad, dedicated to fostering technical excellence and innovation in the field of computer hardware engineering.
+                    </p>
+                    <p class="about-description">
+                        Established with the vision of bridging the gap between academic knowledge and industry requirements, CHESA organizes workshops, seminars, technical competitions, and industry interactions to enhance the practical skills of students. Our association serves as a platform for students to showcase their talents, collaborate on projects, and stay updated with the latest advancements in hardware technology.
+                    </p>
+                    <p class="about-description">
+                        The PixelCraft 2025 inauguration marks the beginning of a new chapter for CHESA, with exciting events and initiatives planned throughout the year to empower students and prepare them for successful careers in the hardware engineering industry.
+                    </p>
+                </div>
+                <div class="about-image">
+                    <div class="about-image-placeholder" title="CHESA Group Photo">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Schedule Section -->
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <h2 class="section-title">Event Schedule</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-time">10:00 AM - 10:30 AM</div>
+                        <div class="timeline-title">Registration & Welcome</div>
+                        <div class="timeline-description">
+                            Participant registration, distribution of event materials, and welcome refreshments.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-time">10:30 AM - 11:00 AM</div>
+                        <div class="timeline-title">Inaugural Ceremony</div>
+                        <div class="timeline-description">
+                            Official inauguration by the Principal, lighting of the lamp, and introduction of CHESA.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-time">11:00 AM - 11:30 AM</div>
+                        <div class="timeline-title">Keynote Address</div>
+                        <div class="timeline-description">
+                            Keynote speech by the Chief Guest on emerging trends in computer hardware engineering.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-time">11:30 AM - 12:30 PM</div>
+                        <div class="timeline-title">Technical Workshop</div>
+                        <div class="timeline-description">
+                            Interactive workshop on "Building Custom PCs: Hardware Selection and Assembly".
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-time">12:30 PM - 1:00 PM</div>
+                        <div class="timeline-title">Tea Break</div>
+                        <div class="timeline-description">
+                            Networking session with faculty, industry experts, and fellow students.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-time">1:00 PM - 2:30 PM</div>
+                        <div class="timeline-title">Project Showcase</div>
+                        <div class="timeline-description">
+                            Presentation of innovative hardware projects by students and demonstration of working models.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-time">2:30 PM - 3:30 PM</div>
+                        <div class="timeline-title">Lunch Break</div>
+                        <div class="timeline-description">
+                            Lunch and informal networking session.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-time">3:30 PM - 5:00 PM</div>
+                        <div class="timeline-title">Hardware Quiz Competition</div>
+                        <div class="timeline-description">
+                            Interactive quiz competition on computer hardware concepts with exciting prizes.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-time">5:00 PM - 5:30 PM</div>
+                        <div class="timeline-title">Valedictory Session</div>
+                        <div class="timeline-description">
+                            Prize distribution, vote of thanks, and closing remarks by the Head of Department.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Speakers Section -->
+    <section class="speakers" id="speakers">
+        <div class="container">
+            <h2 class="section-title">Distinguished Speakers</h2>
+            <div class="speakers-grid">
+                <div class="speaker-card">
+                    <div class="speaker-image-placeholder" title="Dr. Dileep.P">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Dr. Dileep.P</h3>
+                        <p class="speaker-role">Chief Guest & Principal</p>
+                        <p class="speaker-bio">
+                            Dr. Dileep.P is the Principal of Government Polytechnic College, Palakkad. With extensive experience in technical education, he is a strong advocate for practical learning and innovation in engineering education.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="speaker-card">
+                    <div class="speaker-image-placeholder" title="Mr. Sajan E V">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Mr. Sajan E V</h3>
+                        <p class="speaker-role">Head of Department</p>
+                        <p class="speaker-bio">
+                            Mr. Sajan E V is the Head of Computer Hardware Engineering Department. With a BTech degree and extensive experience, he has been leading the department since July 2017 and is instrumental in establishing CHESA.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="speaker-card">
+                    <div class="speaker-image-placeholder" title="Dr. Venugopalan K">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Dr. Venugopalan K</h3>
+                        <p class="speaker-role">Lecturer</p>
+                        <p class="speaker-bio">
+                            Experienced lecturer with 7 years in electronics engineering and 19 years in government service. Holds an MTech degree and has 10 years of industrial experience with companies like BPL. Actively participates in community development, employment initiatives, and recruitment activities. Also serves as a member of the UKIERI project.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="speaker-card">
+                    <div class="speaker-image-placeholder" title="Mr. Sudevan K">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Mr. Sudevan K</h3>
+                        <p class="speaker-role">Lecturer</p>
+                        <p class="speaker-bio">
+                            Mr. Sudevan K is a dedicated lecturer with an M.Tech in Computer Science. He brings valuable industry experience to the classroom and mentors students in various hardware projects.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="speaker-card">
+                    <div class="speaker-image-placeholder" title="Mr. Jithesh N V">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Mr. Jithesh N V</h3>
+                        <p class="speaker-role">Trade Instructor</p>
+                        <p class="speaker-bio">
+                            Mr. Jithesh N V is an experienced Trade Instructor with multiple technical qualifications. His hands-on approach to teaching and dedication to student development has made him a respected faculty member.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Faculty Section -->
+    <section class="faculty" id="faculty">
+        <div class="container">
+            <h2 class="section-title">Faculty Members</h2>
+            
+            <!-- Head of Department -->
+            <div class="faculty-group">
+                <h3 class="group-title">Head of Department</h3>
+                <div class="teachers-grid">
+                    <!-- Teacher 1 - HOD -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Mr. Sajan E V</h3>
+                            <p class="teacher-role">Head of Department</p>
+                            <p class="teacher-details">
+                                BTech in Computer Science with extensive experience in hardware engineering. Leading the department since July 2017. Passionate about nurturing technical talent and establishing industry connections.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BTech in Computer Science Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Computer Hardware Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-award"></i>
+                                    <span>Advanced Certificate in Embedded Systems</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:evsajan@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:+919447806445" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lecturers -->
+            <div class="faculty-group">
+                <h3 class="group-title">Lecturers</h3>
+                <div class="teachers-grid">
+                    <!-- Teacher 2 - Lecturer -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Mr. Sudevan K</h3>
+                            <p class="teacher-role">Lecturer</p>
+                            <p class="teacher-details">
+                                M.Tech in Computer Science with specialization in hardware engineering. Brings valuable industry experience to the classroom and mentors students in various hardware projects.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>M.Tech in Computer Science</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BTech in Information Technology</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Certified Hardware Engineer (CHE)</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>CCNA Certification</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:sudevank@gptcpalakkad.ac.in" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="#" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 4 - Dr. Venugopalan K -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Dr. Venugopalan K</h3>
+                            <p class="teacher-role">Lecturer</p>
+                            <p class="teacher-details">
+                                Experienced lecturer with 7 years in electronics engineering and 19 years in government service. Holds an MTech degree and has 10 years of industrial experience with companies like BPL. Actively participates in community development, employment initiatives, and recruitment activities. Also serves as a member of the UKIERI project.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>MTech in Computer Hardware Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BTech in Electronics and Communication</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Electronics Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Certified Embedded Systems Professional</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:venusknair@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:+919895868338" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 6 - Ms. Manila M V -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Ms. Manila M V</h3>
+                            <p class="teacher-role">Lecturer</p>
+                            <p class="teacher-details">
+                                Holds an MTech degree and has been serving as a lecturer since May 2016. Completed her MTech from IIT Madras in 2010. Previously worked as a lecturer in a government polytechnic college. Currently pursuing PhD at NIT Calicut. Specializes in computer architecture and embedded systems.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>MTech in Computer Hardware Engineering (IIT Madras)</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BTech in Computer Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>PhD (Pursuing) at NIT Calicut</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Certified Embedded Systems Engineer</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:manila.mv@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:+919447454041" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 10 - Ms. Sruthimol.M P -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Ms. Sruthimol.M P</h3>
+                            <p class="teacher-role">Lecturer</p>
+                            <p class="teacher-details">
+                                Dedicated lecturer in Computer Hardware Engineering Department with expertise in hardware architecture and system design. Brings academic excellence and practical knowledge to the classroom. Committed to fostering technical skills and innovation among students.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>M.Tech in Computer Science</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>B.Tech in Computer Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Certified Hardware Engineer</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Permanent Staff</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:sruthinarayan.mp@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:9746940329" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 11 - Ms. Suchithra S Nair -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Ms. Suchithra S Nair</h3>
+                            <p class="teacher-role">Lecturer</p>
+                            <p class="teacher-details">
+                                Experienced lecturer in Computer Hardware Engineering Department with strong academic background in hardware engineering. Brings practical knowledge and industry insights to the classroom. Committed to providing quality education and mentoring students in hardware technologies.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BTech in Computer Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>ME in Computer Science</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Permanent Staff</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Computer Hardware Engineering</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:suchithrasalaja501@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:8943670299" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 12 - Ms. Keerthi M -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Ms. Keerthi M</h3>
+                            <p class="teacher-role">Lecturer (Guest)</p>
+                            <p class="teacher-details">
+                                Guest lecturer in Computer Hardware Engineering Department with strong academic background in computer science and information systems. Brings fresh perspectives and contemporary knowledge to the classroom. Specializes in computer hardware architecture and information systems integration.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>B.Tech CSE</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>M.Tech Computer Science and Information System</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Guest Faculty</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Computer Hardware Engineering</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:krth.121@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:9947093280" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trade Instructors -->
+            <div class="faculty-group">
+                <h3 class="group-title">Trade Instructors</h3>
+                <div class="teachers-grid">
+                    <!-- Teacher 3 - Trade Instructor -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Mr. Jithesh N V</h3>
+                            <p class="teacher-role">Trade Instructor</p>
+                            <p class="teacher-details">
+                                Experienced Trade Instructor with multiple technical qualifications including Diploma, BTech, and MTech degrees. Brings practical knowledge and hands-on approach to teaching. Actively involved in organizing technical workshops and training programs.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>MTech in Computer Science</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BTech in Computer Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Computer Hardware Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>CompTIA A+ Certification</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Microsoft Certified Professional (MCP)</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:jithesh@gpcpalakkad.ac.in" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="#" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 9 - Mr. Raveendra Kumar.K.V -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Mr. Raveendra Kumar.K.V</h3>
+                            <p class="teacher-role">Trade Instructor Gr.II</p>
+                            <p class="teacher-details">
+                                Working as Trade Instructor Grade II in Computer Hardware Engineering Department since November 2023. Brings practical knowledge and hands-on experience in hardware maintenance and troubleshooting. Committed to providing quality technical education to students.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Computer Hardware Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>Joined: 03 - 11 - 2023</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-user-check"></i>
+                                    <span>Regular From 2023</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Trade Instructor Gr.II</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:raveendrakumarkv@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:9747340194" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Demonstrators -->
+            <div class="faculty-group">
+                <h3 class="group-title">Demonstrators</h3>
+                <div class="teachers-grid">
+                    <!-- Teacher 5 - Mr. Sudhesh K M -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Mr. Sudhesh K M</h3>
+                            <p class="teacher-role">Demonstrator</p>
+                            <p class="teacher-details">
+                                Currently pursuing PhD in Computer Hardware Engineering. Holds MTech and BTech degrees along with a Diploma in Computer Hardware Engineering. Has published several research papers in international journals. Specializes in practical demonstrations and hands-on training for students.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>PhD (Pursuing) in Computer Hardware Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>MTech in Computer Science</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BTech in Computer Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Computer Hardware Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Published Research Papers in International Journals</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:sudheshkm@gpcpalakkad.ac.in" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:+919876543210" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 13 - Ms. Hareeshma.P H -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Ms. Hareeshma.P H</h3>
+                            <p class="teacher-role">Demonstrator (Guest)</p>
+                            <p class="teacher-details">
+                                Guest demonstrator in Computer Hardware Engineering Department with specialized knowledge in computer hardware maintenance. Brings practical expertise and hands-on experience to support student learning. Dedicated to providing technical assistance and guidance in hardware-related projects.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Computer Hardware Maintenance</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-tools"></i>
+                                    <span>Hardware Maintenance Specialist</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Guest Faculty</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Computer Hardware Engineering</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:hareeshma7@gmail.com" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:9497352425" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tradesmen -->
+            <div class="faculty-group">
+                <h3 class="group-title">Tradesmen</h3>
+                <div class="teachers-grid">
+                    <!-- Teacher 7 - Mr. Satheesh C -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Mr. Satheesh C</h3>
+                            <p class="teacher-role">Tradesman</p>
+                            <p class="teacher-details">
+                                Joined in this institution on 1st December 2022. Nature of Association: Regular. Specializes in computer hardware maintenance and troubleshooting. Provides technical support for various hardware-related issues in the department and assists students with practical training.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>MA in Economics</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>PGDCA (Post Graduate Diploma in Computer Applications)</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>MCA (Master of Computer Applications)</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Computer Hardware Engineering</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:satheeshc007@gptcpalakkad.ac.in" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:9497632086" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teacher 8 - Ms. Sujatha V -->
+                    <div class="teacher-card">
+                        <div class="teacher-image-placeholder" title="Add Profile Photo">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="teacher-info">
+                            <h3 class="teacher-name">Ms. Sujatha V</h3>
+                            <p class="teacher-role">Tradesman</p>
+                            <p class="teacher-details">
+                                Experienced Tradesman with 16 years of professional experience in Computer Hardware Engineering. Joined the institution on January 12, 2017. Previously worked at Lal Bahadhur Sasthri Centre, Southern Railway Palakkad Division, and GST Department. Specializes in hardware maintenance, troubleshooting, and technical support.
+                            </p>
+                            <div class="teacher-qualifications">
+                                <div class="qualification-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>BCA (Bachelor of Computer Applications)</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Diploma in Computer Hardware Engineering</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>16 years of experience</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Lal Bahadhur Sasthri Centre</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Southern Railway Palakkad Division</span>
+                                </div>
+                                <div class="qualification-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>GST Department</span>
+                                </div>
+                            </div>
+                            <div class="teacher-contact">
+                                <a href="mailto:sujatha@gpcpalakkad.ac.in" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:+919876543210" title="Phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Event Venue</h3>
+                            <p>Government Polytechnic College, Palakkad<br>
+                            Kodumbu, Palakkad, Kerala 678551</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Contact Number</h3>
+                            <p>+91 98765 43210</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Email Address</h3>
+                            <p>chesa@gpcpalakkad.ac.in</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Event Timing</h3>
+                            <p>14 August 2025, 10:00 AM IST</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="contactName">Your Name</label>
+                            <input type="text" class="form-control" id="contactName" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="contactEmail">Email Address</label>
+                            <input type="email" class="form-control" id="contactEmail" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="contactSubject">Subject</label>
+                            <input type="text" class="form-control" id="contactSubject" placeholder="Enter subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="contactMessage">Message</label>
+                            <textarea class="form-control" id="contactMessage" rows="5" placeholder="Enter your message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            <p class="copyright">© 2025 CHESA – Computer Hardware Engineering Students Association, Government Polytechnic College, Palakkad. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+        
+        // Generate circuit animation for loading screen
+        function generateCircuitAnimation() {
+            const circuitAnimation = document.getElementById('circuitAnimation');
+            const lineCount = 20;
+            const nodeCount = 30;
+            
+            // Create circuit lines
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.classList.add('circuit-line');
+                
+                // Random position and size
+                const isHorizontal = Math.random() > 0.5;
+                const length = 100 + Math.random() * 200;
+                const thickness = 1 + Math.random() * 2;
+                
+                if (isHorizontal) {
+                    line.style.width = `${length}px`;
+                    line.style.height = `${thickness}px`;
+                    line.style.left = `${Math.random() * 100}%`;
+                    line.style.top = `${Math.random() * 100}%`;
+                } else {
+                    line.style.width = `${thickness}px`;
+                    line.style.height = `${length}px`;
+                    line.style.left = `${Math.random() * 100}%`;
+                    line.style.top = `${Math.random() * 100}%`;
+                }
+                
+                circuitAnimation.appendChild(line);
+            }
+            
+            // Create circuit nodes
+            for (let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.classList.add('circuit-node');
+                
+                // Random position
+                node.style.left = `${Math.random() * 100}%`;
+                node.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay
+                const delay = Math.random() * 3;
+                node.style.animationDelay = `${delay}s`;
+                
+                circuitAnimation.appendChild(node);
+            }
+        }
+        
+        // Loading Screen
+        window.addEventListener('load', function() {
+            // Generate circuit animation
+            generateCircuitAnimation();
+            
+            const loadingScreen = document.getElementById('loadingScreen');
+            const progressBar = document.getElementById('progressBar');
+            let progress = 0;
+            
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                
+                if (progress > 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+                    
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        initializeAnimations();
+                    }, 500);
+                }
+                
+                progressBar.style.width = `${progress}%`;
+            }, 200);
+        });
+        
+        // Initialize animations after loading
+        function initializeAnimations() {
+            // Initialize Particles.js
+            particlesJS('particles-js', {
+                particles: {
+                    number: {
+                        value: 80,
+                        density: {
+                            enable: true,
+                            value_area: 800
+                        }
+                    },
+                    color: {
+                        value: "#00eaff"
+                    },
+                    shape: {
+                        type: "circle",
+                        stroke: {
+                            width: 0,
+                            color: "#000000"
+                        }
+                    },
+                    opacity: {
+                        value: 0.5,
+                        random: false,
+                        anim: {
+                            enable: false,
+                            speed: 1,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                        anim: {
+                            enable: false,
+                            speed: 40,
+                            size_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#00eaff",
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: false,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                        attract: {
+                            enable: false,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: "grab"
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: "push"
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 140,
+                            line_linked: {
+                                opacity: 1
+                            }
+                        },
+                        push: {
+                            particles_nb: 4
+                        }
+                    }
+                },
+                retina_detect: true
+            });
+            
+            // Hero section animations
+            gsap.timeline()
+                .to('.tagline', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+                .to('.event-details', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+                .to('.countdown-container', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+                .to('.cta-container', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5');
+            
+            // Section title animations
+            gsap.utils.toArray('.section-title').forEach(title => {
+                gsap.to(title, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: title,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+            
+            // About section animations
+            gsap.to('.about-text', {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.about-text',
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            
+            gsap.to('.about-image', {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.about-image',
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            
+            // Timeline animations
+            gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+                gsap.to(item, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: item,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+            
+            // Speaker cards animations
+            gsap.utils.toArray('.speaker-card').forEach((card, index) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+            
+            // Faculty section animations
+            gsap.utils.toArray('.group-title').forEach(title => {
+                gsap.to(title, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: title,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+            
+            gsap.utils.toArray('.teacher-card').forEach((card, index) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: index * 0.05,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+            
+            // Contact section animations
+            gsap.to('.contact-info', {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.contact-info',
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            
+            gsap.to('.contact-form', {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.contact-form',
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Active navigation link
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Countdown Timer
+            function updateCountdown() {
+                const eventDate = new Date('August 14, 2025 10:00:00 GMT+0530').getTime();
+                const now = new Date().getTime();
+                const distance = eventDate - now;
+                
+                // Time calculations for days, hours, minutes and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Display the result
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                
+                // If the countdown is finished, display a message
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown').innerHTML = '<div class="countdown-item"><div class="countdown-value">Event Started!</div></div>';
+                }
+            }
+            
+            // Update countdown immediately and then every second
+            updateCountdown();
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            
+            // Contact Form Submission
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const subject = document.getElementById('contactSubject').value;
+                const message = document.getElementById('contactMessage').value;
+                
+                // In a real application, you would send this data to a server
+                // For this example, we'll just show a success message
+                console.log({
+                    name,
+                    email,
+                    subject,
+                    message
+                });
+                
+                // Show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                
+                // Reset form
+                contactForm.reset();
+            });
+            
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinksContainer = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinksContainer.classList.toggle('show');
+            });
+            
+            // Three.js Background for Hero Section
+            function initThreeJS() {
+                const heroBg = document.getElementById('heroBg');
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ alpha: true });
+                
+                renderer.setSize(heroBg.offsetWidth, heroBg.offsetHeight);
+                heroBg.appendChild(renderer.domElement);
+                
+                // Create particles
+                const particlesGeometry = new THREE.BufferGeometry();
+                const particlesCnt = 1000;
+                const posArray = new Float32Array(particlesCnt * 3);
+                
+                for (let i = 0; i < particlesCnt * 3; i++) {
+                    posArray[i] = (Math.random() - 0.5) * 10;
+                }
+                
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                
+                // Materials
+                const particlesMaterial = new THREE.PointsMaterial({
+                    size: 0.02,
+                    color: 0x00eaff
+                });
+                
+                // Mesh
+                const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+                scene.add(particlesMesh);
+                
+                camera.position.z = 3;
+                
+                // Animation
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    particlesMesh.rotation.x += 0.001;
+                    particlesMesh.rotation.y += 0.001;
+                    renderer.render(scene, camera);
+                };
+                
+                animate();
+                
+                // Handle resize
+                window.addEventListener('resize', () => {
+                    camera.aspect = heroBg.offsetWidth / heroBg.offsetHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(heroBg.offsetWidth, heroBg.offsetHeight);
+                });
+            }
+            
+            // Initialize Three.js
+            initThreeJS();
+        }
+    </script>
+</body>
+</html>
